@@ -29,6 +29,7 @@ from core.config.repository import ConfigRepository
 from core.config.settings import get, get_bool
 from core.constants import CDP_PORT_RANGE, CHROMIUM_BIN
 from core.plugin.base import PluginRegistry
+from core.plugin.chatgpt import register_chatgpt_plugin
 from core.plugin.claude import register_claude_plugin
 from core.runtime.browser_manager import BrowserManager
 from core.runtime.session_cache import SessionCache
@@ -41,6 +42,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     """启动时初始化配置与 ChatHandler，关闭时不做持久化（会话缓存进程内）。"""
     # 注册插件
     register_claude_plugin()
+    register_chatgpt_plugin()
     ensure_config_secret_hashed()
 
     repo = ConfigRepository()
